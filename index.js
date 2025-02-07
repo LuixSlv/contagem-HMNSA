@@ -43,7 +43,7 @@ function atualizarListaRegistros() {
         let botaoAbrir = document.createElement("button");
         botaoAbrir.textContent = "Abrir";
         botaoAbrir.addEventListener("click", function() {
-            window.location.href = `contador.html?registro=${index}`;
+            window.location.href = `contagem.html?registro=${index}`;
         });
 
         item.appendChild(inputNome);
@@ -58,5 +58,5 @@ function atualizarListaRegistros() {
 }
 
 function novaContagem() {
-    window.location.href = "contador.html";
+    window.location.href = "contagem.html";
 }
