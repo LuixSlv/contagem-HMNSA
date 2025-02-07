@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador de Idades</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Contador de Idades</h1>
+    </header>
+
+    <main>
+        <div class="container">
+            <table>
+                <tr>
+                    <th>Idade</th>
+                    <th>Contagem</th>
+                </tr>
+                <tbody id="tabela-esquerda"></tbody>
+            </table>
+            <div class="spacer"></div>
+            <table>
+                <tr>
+                    <th>Idade</th>
+                    <th>Contagem</th>
+                </tr>
+                <tbody id="tabela-direita"></tbody>
+            </table>
+        </div>
+        <button onclick="salvarContagem()">Salvar Contagem</button>
+    </main>
+
+    <footer>
+        <p>Copyright &copy; 2025 @LuixSlv</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Carregar a contagem salva
+        document.addEventListener("DOMContentLoaded", function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const idRegistro = urlParams.get('id');
+            if (idRegistro !== null) {
+                const registros = JSON.parse(localStorage.getItem("registros")) || [];
+                const registro = registros[idRegistro];
+                carregarContagem(registro.dados);
+            }
+        });
+
+        function carregarContagem(contagem) {
+            let tabelaEsquerda = document.getElementById("tabela-esquerda");
+            let tabelaDireita = document.getElementById("tabela-direita");
+
+            for (let idade in contagem) {
+                let linha = document.createElement("tr");
+                let celulaIdade = document.createElement("td");
+                let celulaContagem = document.createElement("td");
+
+                celulaIdade.textContent = idade;
+                celulaContagem.textContent = contagem[idade];
+
+                linha.appendChild(celulaIdade);
+                linha.appendChild(celulaContagem);
+
+                if (parseInt(idade) <= 50) {
+                    tabelaEsquerda.appendChild(linha);
+                } else {
+                    tabelaDireita.appendChild(linha);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
