@@ -1,4 +1,4 @@
-
+/* Estilo Geral */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -10,7 +10,9 @@ header {
     background-color: #f28c28; /* Laranja */
     padding: 10px;
     color: white;
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 footer {
@@ -131,5 +133,19 @@ li button {
 }
 
 li button:hover {
+    background-color: #218838;
+}
+
+/* Ajustando o layout do botão de nova contagem */
+#nova-contagem-btn {
+    background-color: #28a745; /* Botão verde */
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+#nova-contagem-btn:hover {
     background-color: #218838;
 }
