@@ -24,6 +24,13 @@ document.addEventListener("DOMContentLoaded", function() {
             tabelaDireita.appendChild(linha);
         }
     }
+
+    // Checar se há contagem na URL (para exibir a contagem)
+    const urlParams = new URLSearchParams(window.location.search);
+    const registroId = urlParams.get("registro");
+    if (registroId !== null) {
+        mostrarContagem(registroId);
+    }
 });
 
 function salvarContagem() {
@@ -63,7 +70,7 @@ function imprimirContagem() {
     const dataHoraContagem = document.getElementById("data-hora-contagem").textContent;
 
     const conteudoImpressao = `
-        <h1>Contagem de Idades </h1>
+        <h1>Contagem de Idades</h1>
         <p>${nomeContagem}</p>
         <p>${dataHoraContagem}</p>
         ${tabela}
@@ -73,4 +80,32 @@ function imprimirContagem() {
     janelaImpressao.document.write(conteudoImpressao);
     janelaImpressao.document.close();
     janelaImpressao.print();
+}
+
+function mostrarContagem(id) {
+    const registros = JSON.parse(localStorage.getItem("registros")) || [];
+    const registro = registros[id];
+
+    if (registro) {
+        const tabelaContagem = document.getElementById("tabela-contagem");
+        const nomeContagem = document.getElementById("nome-contagem");
+        const dataHoraContagem = document.getElementById("data-hora-contagem");
+
+        nomeContagem.textContent = registro.nome;
+        dataHoraContagem.textContent = `${new Date(registro.data).toLocaleDateString()} ${new Date(registro.data).toLocaleTimeString()}`;
+
+        Object.keys(registro.dados).forEach(idade => {
+            const linha = document.createElement("tr");
+            const celulaIdade = document.createElement("td");
+            const celulaContagem = document.createElement("td");
+
+            celulaIdade.textContent = idade;
+            celulaContagem.textContent = registro.dados[idade];
+
+            linha.appendChild(celulaIdade);
+            linha.appendChild(celulaContagem);
+
+            tabelaContagem.appendChild(linha);
+        });
+    }
 }
