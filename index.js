@@ -51,7 +51,7 @@ function atualizarListaRegistros() {
 }
 
 function novaContagem() {
-    window.location.href = "contador.html";
+    window.location.href = "contagem.html";
 }
 
 function imprimirContagens() {
