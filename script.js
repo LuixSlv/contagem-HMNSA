@@ -135,40 +135,12 @@ function abrirRegistro(id) {
         }
 
         // Exibe o botão de editar
-        const editarBtn = document.getElementById("editar-nome");
-        const inputNome = document.getElementById("input-nome");
-        const nomeContagemContainer = document.getElementById("nome-contagem-container");
-        
-        editarBtn.addEventListener("click", function() {
-            nomeContagemContainer.classList.toggle("edit");
-            inputNome.value = nomeContagem.textContent;
-        });
-
-        inputNome.addEventListener("change", function() {
-            nomeContagem.textContent = inputNome.value;
-            nomeContagemContainer.classList.remove("edit");
-            // Atualiza os registros com o novo nome
-            registro.nome = inputNome.value;
-            localStorage.setItem("registros", JSON.stringify(registros));
-        });
+        const editarBtn = document.getElementById("editar-contagem");
+        editarBtn.style.display = 'inline-block';
     }
 }
 
 // Função para imprimir a contagem
 function imprimirContagem() {
-    const tabela = document.getElementById("tabela-contagem").outerHTML;
-    const nomeContagem = document.getElementById("nome-contagem").textContent;
-    const dataHoraContagem = document.getElementById("data-hora-contagem").textContent;
-
-    const conteudoImpressao = `
-        <h1>Contagem de Idades</h1>
-        <p>${nomeContagem}</p>
-        <p>${dataHoraContagem}</p>
-        ${tabela}
-    `;
-
-    const janelaImpressao = window.open('', '', 'width=800,height=600');
-    janelaImpressao.document.write(conteudoImpressao);
-    janelaImpressao.document.close();
-    janelaImpressao.print();
+    window.print();
 }
