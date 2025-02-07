@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() { 
+document.addEventListener("DOMContentLoaded", function() {
     atualizarListaRegistros();
 });
 
@@ -9,70 +9,99 @@ function atualizarListaRegistros() {
 
     registros.forEach((registro, index) => {
         let item = document.createElement("li");
-        
-        let textoNome = document.createElement("span");
-        textoNome.textContent = registro.nome;
-        
-        let iconeRenomear = document.createElement("button");
-        iconeRenomear.textContent = "✏️";
-        iconeRenomear.addEventListener("click", function() {
-            let inputNome = document.createElement("input");
-            inputNome.type = "text";
-            inputNome.value = registro.nome;
-            inputNome.addEventListener("blur", function() {
-                registro.nome = inputNome.value;
-                localStorage.setItem("registros", JSON.stringify(registros));
-                atualizarListaRegistros();
-            });
-            item.replaceChild(inputNome, textoNome);
-            inputNome.focus();
+
+        // Exibição do nome, data e hora
+        let nomeDiv = document.createElement("div");
+        nomeDiv.textContent = registro.nome;
+        let dataHoraDiv = document.createElement("div");
+        dataHoraDiv.textContent = `Data: ${registro.data}`;
+
+        // Botões de abrir, editar e excluir
+        let botaoAbrir = document.createElement("button");
+        botaoAbrir.textContent = "Abrir";
+        botaoAbrir.addEventListener("click", function() {
+            abrirContagem(registro.dados);
+        });
+
+        let botaoEditar = document.createElement("button");
+        botaoEditar.textContent = "Editar";
+        botaoEditar.addEventListener("click", function() {
+            editarContagem(index);
         });
 
         let botaoExcluir = document.createElement("button");
         botaoExcluir.textContent = "Excluir";
         botaoExcluir.addEventListener("click", function() {
-            registros.splice(index, 1);
-            localStorage.setItem("registros", JSON.stringify(registros));
-            atualizarListaRegistros();
+            confirmarExclusao(index);
         });
 
-        let botaoAbrirContagem = document.createElement("button");
-        botaoAbrirContagem.textContent = "Abrir";
-        botaoAbrirContagem.addEventListener("click", function() {
-            window.location.href = `contador.html?id=${index}`;
-        });
-
-        item.appendChild(textoNome);
-        item.appendChild(iconeRenomear);
-        item.appendChild(botaoAbrirContagem);
+        item.appendChild(nomeDiv);
+        item.appendChild(dataHoraDiv);
+        item.appendChild(botaoAbrir);
+        item.appendChild(botaoEditar);
         item.appendChild(botaoExcluir);
         lista.appendChild(item);
     });
 }
 
-function novaContagem() {
-    window.location.href = "contagem.html";
+function abrirContagem(dados) {
+    // Ação para abrir a contagem salva
+    window.localStorage.setItem("contagemAberta", JSON.stringify(dados));
+    window.location.href = "contador.html";
 }
 
-function imprimirContagens() {
+function editarContagem(index) {
+    // Ação para editar o nome da contagem
     let registros = JSON.parse(localStorage.getItem("registros")) || [];
-    let tabelaImpressao = document.createElement("table");
-    let cabecalho = document.createElement("tr");
-    cabecalho.innerHTML = "<th>Idade</th><th>Contagem</th>";
-    tabelaImpressao.appendChild(cabecalho);
-
-    registros.forEach(registro => {
-        for (const idade in registro.dados) {
-            let linha = document.createElement("tr");
-            linha.innerHTML = `<td>${idade}</td><td>${registro.dados[idade]}</td>`;
-            tabelaImpressao.appendChild(linha);
-        }
-    });
-
-    let janela = window.open("", "", "width=800, height=600");
-    janela.document.write("<html><body>");
-    janela.document.write(tabelaImpressao.outerHTML);
-    janela.document.write("</body></html>");
-    janela.document.close();
+    let novoNome = prompt("Digite o novo nome para a contagem:", registros[index].nome);
+    if (novoNome) {
+        registros[index].nome = novoNome;
+        localStorage.setItem("registros", JSON.stringify(registros));
+        atualizarListaRegistros();
+    }
 }
 
+function confirmarExclusao(index) {
+    let confirmar = confirm("Você tem certeza que deseja excluir esta contagem?");
+    if (confirmar) {
+        let registros = JSON.parse(localStorage.getItem("registros")) || [];
+        registros.splice(index, 1);
+        localStorage.setItem("registros", JSON.stringify(registros));
+        atualizarListaRegistros();
+    }
+}
+
+function novaContagem() {
+    window.location.href = "contador.html";
+}
+
+function imprimir() {
+    let registros = JSON.parse(localStorage.getItem("registros")) || [];
+    let selecao = prompt("Digite o número da contagem que você deseja imprimir (ex: 1, 2, 3...)");
+
+    if (selecao) {
+        let contagem = registros[parseInt(selecao) - 1];
+        if (contagem) {
+            let conteudo = `
+                <h1>Contagem de Idades</h1>
+                <p><strong>Nome:</strong> ${contagem.nome}</p>
+                <p><strong>Data:</strong> ${contagem.data}</p>
+                <table border="1">
+                    <tr><th>Idade</th><th>Contagem</th></tr>
+                    ${Object.keys(contagem.dados).map(idade => `
+                        <tr>
+                            <td>${idade}</td>
+                            <td>${contagem.dados[idade]}</td>
+                        </tr>
+                    `).join('')}
+                </table>
+            `;
+            let novaJanela = window.open('', '', 'width=800,height=600');
+            novaJanela.document.write(conteudo);
+            novaJanela.document.close();
+            novaJanela.print();
+        } else {
+            alert("Contagem não encontrada!");
+        }
+    }
+}
