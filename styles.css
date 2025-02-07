@@ -1,132 +1,72 @@
-/* Estilo geral */
 body {
     font-family: Arial, sans-serif;
+    text-align: center;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
 }
 
-header {
-    background-color: #4CAF50;
-    color: white;
-    text-align: center;
-    padding: 20px 0;
-}
-
-footer {
-    text-align: center;
+header, footer {
+    background-color: orange;
     padding: 10px;
-    background-color: #4CAF50;
     color: white;
-    position: fixed;
-    bottom: 0;
+    font-weight: bold;
     width: 100%;
+    box-sizing: border-box;
 }
 
-main {
-    padding: 20px;
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+    margin: 20px 0;
 }
 
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    font-size: 16px;
-    margin-right: 10px;
-    border-radius: 5px;
+.spacer {
+    width: 50px;
 }
 
-button:hover {
-    background-color: #45a049;
-}
-
-button:active {
-    background-color: #3e8e41;
-}
-
-h1, h2 {
-    color: #333;
-}
-
-/* Estilo da lista de registros */
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    background-color: #fff;
-    margin: 10px 0;
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-li div {
-    margin-bottom: 5px;
-}
-
-li button {
-    margin-left: 10px;
-}
-
-/* Tabelas de contagem */
 table {
-    width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    width: 300px;
 }
 
 th, td {
-    padding: 10px;
+    border: 1px solid black;
+    padding: 5px;
     text-align: center;
-    border: 1px solid #ddd;
 }
 
 th {
-    background-color: #4CAF50;
+    background-color: blue;
     color: white;
 }
 
 td {
-    background-color: #f9f9f9;
+    cursor: pointer;
 }
 
-/* Estilo para impressão */
-@media print {
-    body {
-        font-size: 12pt;
-        background-color: white;
-    }
+tr:nth-child(even) td:nth-child(2) {
+    background-color: #d3d3d3;
+}
 
-    h1, p, table {
-        page-break-before: always;
-    }
+td:first-child {
+    font-weight: bold;
+}
 
-    table {
-        width: 100%;
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
+button {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
 
-    th, td {
-        padding: 5px;
-        text-align: center;
-    }
+.container-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
 
-    th {
-        background-color: #4CAF50;
-        color: white;
-    }
-
-    td {
-        background-color: #f9f9f9;
-    }
-
-    .no-print {
-        display: none;
-    }
+.container-buttons button {
+    margin-top: 20px;
 }
