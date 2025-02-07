@@ -1,9 +1,9 @@
-document.addEventListener("DOMContentLoaded", function() { 
+document.addEventListener("DOMContentLoaded", function() {
     const params = new URLSearchParams(window.location.search);
     const idRegistro = params.get('id');
     
-    if (idRegistro) {
-        carregarRegistro(idRegistro);
+    if (idRegistro !== null) {
+        carregarRegistro(parseInt(idRegistro));
     } else {
         preencherTabelas();
     }
@@ -59,9 +59,9 @@ function salvarContagem() {
     window.location.href = "index.html";
 }
 
-function carregarRegistro(id) {
+function carregarRegistro(index) {
     let registros = JSON.parse(localStorage.getItem("registros")) || [];
-    let registro = registros.find(r => r.nome === id);
+    let registro = registros[index];
 
     if (registro) {
         document.getElementById("nome-contagem").textContent = registro.nome;
