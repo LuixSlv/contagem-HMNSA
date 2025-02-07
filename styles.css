@@ -11,15 +11,13 @@ header {
     background-color: #ff6600;
     color: white;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    text-align: center;
+    padding: 15px 20px;
 }
 
 header h1 {
-    font-size: 28px;
-    margin-bottom: 10px;
+    font-size: 24px;
 }
 
 header button {
@@ -41,13 +39,18 @@ header button:hover {
 /* Layout principal */
 main {
     padding: 20px;
-    min-height: calc(100vh - 140px); /* Garante que o rodapé fique no final */
+    min-height: calc(100vh - 100px); /* Ajuste para o rodapé fixo */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Estilização dos registros salvos */
 #lista-registros {
     list-style: none;
     padding: 0;
+    width: 100%;
+    max-width: 600px;
 }
 
 #lista-registros li {
@@ -76,15 +79,16 @@ main {
     color: white;
 }
 
-/* Estilização das tabelas */
+/* Estilização da tela de contagem */
 .container {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 20px;
     margin-top: 20px;
-    flex-wrap: wrap;
 }
 
+/* Estilização das tabelas */
 table {
     width: 45%;
     max-width: 400px;
