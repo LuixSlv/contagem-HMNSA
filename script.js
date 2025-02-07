@@ -1,64 +1,90 @@
 document.addEventListener("DOMContentLoaded", function() {
-    atualizarListaRegistros();
+    carregarContagemSalva();
+    configurarContagem();
 });
 
-function atualizarListaRegistros() {
-    let registros = JSON.parse(localStorage.getItem("registros")) || [];
-    let lista = document.getElementById("lista-registros");
-    lista.innerHTML = "";
+function carregarContagemSalva() {
+    // Carrega a contagem salva, se houver
+    let contagemSalva = JSON.parse(localStorage.getItem("contagem-atual"));
+    if (contagemSalva) {
+        // Exibe as contagens salvas na tabela
+        let tabelaEsquerda = document.getElementById("tabela-esquerda");
+        let tabelaDireita = document.getElementById("tabela-direita");
 
-    registros.forEach((registro, index) => {
-        let item = document.createElement("li");
+        for (let idade in contagemSalva) {
+            let contagem = contagemSalva[idade];
+            let linha = document.createElement("tr");
+            let celulaIdade = document.createElement("td");
+            let celulaContagem = document.createElement("td");
 
-        // Nome do registro
-        let nomeRegistro = document.createElement("span");
-        nomeRegistro.textContent = registro.nome;
+            celulaIdade.textContent = idade;
+            celulaContagem.textContent = contagem;
 
-        // Ícone de renomeação
-        let iconeEditar = document.createElement("span");
-        iconeEditar.textContent = "✏️";
-        iconeEditar.style.cursor = "pointer";
-        iconeEditar.addEventListener("click", function() {
-            // Ativa o campo de texto para renomear
-            let inputNome = document.createElement("input");
-            inputNome.type = "text";
-            inputNome.value = registro.nome;
-            inputNome.addEventListener("change", function() {
-                registro.nome = inputNome.value;
-                localStorage.setItem("registros", JSON.stringify(registros));
-                atualizarListaRegistros();
-            });
-            item.innerHTML = ''; // Limpa o item atual
-            item.appendChild(inputNome);
-            item.appendChild(botaoExcluir);
+            linha.appendChild(celulaIdade);
+            linha.appendChild(celulaContagem);
+
+            if (parseInt(idade) <= 50) {
+                tabelaEsquerda.appendChild(linha);
+            } else {
+                tabelaDireita.appendChild(linha);
+            }
+        }
+    }
+}
+
+function configurarContagem() {
+    const tabelaEsquerda = document.getElementById("tabela-esquerda");
+    const tabelaDireita = document.getElementById("tabela-direita");
+
+    for (let i = 0; i <= 100; i++) {
+        let linha = document.createElement("tr");
+        let celulaIdade = document.createElement("td");
+        let celulaContagem = document.createElement("td");
+
+        celulaIdade.textContent = i;
+        celulaContagem.textContent = 0;
+
+        celulaIdade.addEventListener("click", function() {
+            celulaContagem.textContent = parseInt(celulaContagem.textContent) + 1;
         });
 
-        // Botão de exclusão
-        let botaoExcluir = document.createElement("button");
-        botaoExcluir.textContent = "Excluir";
-        botaoExcluir.addEventListener("click", function() {
-            registros.splice(index, 1);
-            localStorage.setItem("registros", JSON.stringify(registros));
-            atualizarListaRegistros();
-        });
+        linha.appendChild(celulaIdade);
+        linha.appendChild(celulaContagem);
 
-        item.appendChild(nomeRegistro);
-        item.appendChild(iconeEditar);
-        item.appendChild(botaoExcluir);
-        lista.appendChild(item);
+        if (i <= 50) {
+            tabelaEsquerda.appendChild(linha);
+        } else {
+            tabelaDireita.appendChild(linha);
+        }
+    }
+}
 
-        // Redireciona para a página da contagem ao clicar no nome do registro
-        nomeRegistro.addEventListener("click", function() {
-            localStorage.setItem("contagem-atual", JSON.stringify(registro.dados));
-            window.location.href = "contador.html";
-        });
+function salvarContagem() {
+    let contagem = {};
+    let linhasEsquerda = document.querySelectorAll("#tabela-esquerda tr");
+    let linhasDireita = document.querySelectorAll("#tabela-direita tr");
+
+    linhasEsquerda.forEach((linha) => {
+        let idade = linha.cells[0].textContent;
+        let quantidade = linha.cells[1].textContent;
+        contagem[idade] = quantidade;
     });
-}
 
-function novaContagem() {
-    window.location.href = "contador.html";
-}
+    linhasDireita.forEach((linha) => {
+        let idade = linha.cells[0].textContent;
+        let quantidade = linha.cells[1].textContent;
+        contagem[idade] = quantidade;
+    });
 
-function imprimirContagem() {
-    window.print();  // Função padrão para imprimir a página
+    let registros = JSON.parse(localStorage.getItem("registros")) || [];
+    let data = new Date();
+    let registro = {
+        nome: `Registro ${data.toLocaleDateString()} ${data.toLocaleTimeString()}`,
+        data: data.toISOString(),
+        dados: contagem
+    };
+
+    registros.push(registro);
+    localStorage.setItem("registros", JSON.stringify(registros));
+    window.location.href = "index.html";  // Redireciona de volta para a página de registros
 }
