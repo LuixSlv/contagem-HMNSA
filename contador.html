@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,34 +9,35 @@
 <body>
     <header>
         <h1>Contagem de Idades</h1>
-    </header>
-
-    <main>
-        <div id="nome-contagem-container">
-            <h2 id="nome-contagem">Nome do Registro</h2>
-            <button id="editar-nome">Editar</button>
-            <input type="text" id="input-nome" style="display:none;">
-        </div>
-
-        <table id="tabela-contagem">
-            <tr>
-                <th>Idade</th>
-                <th>Contagem</th>
-            </tr>
-            <tbody id="tabela-esquerda"></tbody>
-            <tbody id="tabela-direita"></tbody>
-        </table>
-
         <div class="container-buttons">
             <button onclick="salvarContagem()">Salvar Contagem</button>
             <button onclick="imprimirContagem()">Imprimir</button>
         </div>
+    </header>
 
+    <main>
+        <h2 id="nome-contagem"></h2>
         <p id="data-hora-contagem"></p>
+
+        <div class="container">
+            <table id="tabela-esquerda">
+                <thead>
+                    <tr><th>Idade</th><th>Contagem</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <table id="tabela-direita">
+                <thead>
+                    <tr><th>Idade</th><th>Contagem</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </main>
 
     <footer>
-        <p>Copyright &copy; 2025 @LuixSlv</p>
+        <p>&copy; 2025 Contagem de Idades</p>
     </footer>
 
     <script src="script.js"></script>
