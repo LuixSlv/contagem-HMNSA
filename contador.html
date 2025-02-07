@@ -3,33 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contador de Idades</title>
+    <title>Contagem de Idades</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Contador de Idades</h1>
+        <h1>Contagem de Idades</h1>
     </header>
 
     <main>
         <div class="container">
-            <table>
+            <table id="tabela-contagem">
                 <tr>
                     <th>Idade</th>
                     <th>Contagem</th>
                 </tr>
                 <tbody id="tabela-esquerda"></tbody>
-            </table>
-            <div class="spacer"></div>
-            <table>
-                <tr>
-                    <th>Idade</th>
-                    <th>Contagem</th>
-                </tr>
                 <tbody id="tabela-direita"></tbody>
             </table>
         </div>
-        <button onclick="salvarContagem()">Salvar Contagem</button>
+
+        <div class="container-buttons">
+            <button onclick="salvarContagem()">Salvar Contagem</button>
+            <button onclick="imprimirContagem()">Imprimir</button>
+        </div>
+
+        <p id="nome-contagem"></p>
+        <p id="data-hora-contagem"></p>
     </main>
 
     <footer>
