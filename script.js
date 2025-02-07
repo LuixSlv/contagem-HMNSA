@@ -52,16 +52,18 @@ function salvarContagem() {
 
     let registros = JSON.parse(localStorage.getItem("registros")) || [];
     let data = new Date();
+    let codigoRegistro = `registro-${Date.now()}`;  // Gera um código único para o arquivo
     let registro = {
         nome: `Registro ${data.toLocaleDateString()} ${data.toLocaleTimeString()}`,
         data: data.toISOString(),
         dados: contagem
     };
 
-    registros.push(registro);
+    registros.push({ codigo: codigoRegistro, ...registro });
     localStorage.setItem("registros", JSON.stringify(registros));
 
-    window.location.href = "index.html";
+    // Redireciona para a tela inicial com o código do registro
+    window.location.href = `index.html?registro=${codigoRegistro}`;
 }
 
 function imprimirContagem() {
@@ -84,7 +86,7 @@ function imprimirContagem() {
 
 function mostrarContagem(id) {
     const registros = JSON.parse(localStorage.getItem("registros")) || [];
-    const registro = registros[id];
+    const registro = registros.find(reg => reg.codigo === id);
 
     if (registro) {
         const tabelaContagem = document.getElementById("tabela-contagem");
@@ -106,6 +108,24 @@ function mostrarContagem(id) {
             linha.appendChild(celulaContagem);
 
             tabelaContagem.appendChild(linha);
+        });
+
+        // Exibe o botão de editar
+        const editarBtn = document.getElementById("editar-nome");
+        const inputNome = document.getElementById("input-nome");
+        const nomeContagemContainer = document.getElementById("nome-contagem-container");
+        
+        editarBtn.addEventListener("click", function() {
+            nomeContagemContainer.classList.toggle("edit");
+            inputNome.value = nomeContagem.textContent;
+        });
+
+        inputNome.addEventListener("change", function() {
+            nomeContagem.textContent = inputNome.value;
+            nomeContagemContainer.classList.remove("edit");
+            // Atualiza os registros com o novo nome
+            registro.nome = inputNome.value;
+            localStorage.setItem("registros", JSON.stringify(registros));
         });
     }
 }
