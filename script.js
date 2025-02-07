@@ -140,6 +140,7 @@ function abrirRegistro(id) {
     }
 }
 
+
 // Função para imprimir a contagem
 function imprimirContagem() {
     window.print();
