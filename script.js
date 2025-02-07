@@ -1,12 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
-    configurarContagem();
-    carregarContagemSalva();
-});
-
-function configurarContagem() {
     const tabelaEsquerda = document.getElementById("tabela-esquerda");
     const tabelaDireita = document.getElementById("tabela-direita");
 
+    // Preenche as tabelas de 0 a 100
     for (let i = 0; i <= 100; i++) {
         let linha = document.createElement("tr");
         let celulaIdade = document.createElement("td");
@@ -28,23 +24,7 @@ function configurarContagem() {
             tabelaDireita.appendChild(linha);
         }
     }
-}
-
-function carregarContagemSalva() {
-    let contagemSalva = JSON.parse(localStorage.getItem("contagemAberta"));
-    if (contagemSalva) {
-        let tabelaEsquerda = document.getElementById("tabela-esquerda");
-        let tabelaDireita = document.getElementById("tabela-direita");
-
-        Object.keys(contagemSalva).forEach(idade => {
-            let quantidade = contagemSalva[idade];
-            let linha = idade <= 50 ? tabelaEsquerda.querySelector(`tr:nth-child(${parseInt(idade) + 1})`) : tabelaDireita.querySelector(`tr:nth-child(${parseInt(idade) + 1})`);
-            if (linha) {
-                linha.cells[1].textContent = quantidade;
-            }
-        });
-    }
-}
+});
 
 function salvarContagem() {
     let contagem = {};
@@ -73,5 +53,24 @@ function salvarContagem() {
 
     registros.push(registro);
     localStorage.setItem("registros", JSON.stringify(registros));
+
     window.location.href = "index.html";
+}
+
+function imprimirContagem() {
+    const tabela = document.getElementById("tabela-contagem").outerHTML;
+    const nomeContagem = document.getElementById("nome-contagem").textContent;
+    const dataHoraContagem = document.getElementById("data-hora-contagem").textContent;
+
+    const conteudoImpressao = `
+        <h1>Contagem de Idades</h1>
+        <p>${nomeContagem}</p>
+        <p>${dataHoraContagem}</p>
+        ${tabela}
+    `;
+
+    const janelaImpressao = window.open('', '', 'width=800,height=600');
+    janelaImpressao.document.write(conteudoImpressao);
+    janelaImpressao.document.close();
+    janelaImpressao.print();
 }
