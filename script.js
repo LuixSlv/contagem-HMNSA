@@ -1,36 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
-    carregarContagemSalva();
     configurarContagem();
 });
-
-function carregarContagemSalva() {
-    // Carrega a contagem salva, se houver
-    let contagemSalva = JSON.parse(localStorage.getItem("contagem-atual"));
-    if (contagemSalva) {
-        // Exibe as contagens salvas na tabela
-        let tabelaEsquerda = document.getElementById("tabela-esquerda");
-        let tabelaDireita = document.getElementById("tabela-direita");
-
-        for (let idade in contagemSalva) {
-            let contagem = contagemSalva[idade];
-            let linha = document.createElement("tr");
-            let celulaIdade = document.createElement("td");
-            let celulaContagem = document.createElement("td");
-
-            celulaIdade.textContent = idade;
-            celulaContagem.textContent = contagem;
-
-            linha.appendChild(celulaIdade);
-            linha.appendChild(celulaContagem);
-
-            if (parseInt(idade) <= 50) {
-                tabelaEsquerda.appendChild(linha);
-            } else {
-                tabelaDireita.appendChild(linha);
-            }
-        }
-    }
-}
 
 function configurarContagem() {
     const tabelaEsquerda = document.getElementById("tabela-esquerda");
@@ -44,6 +14,7 @@ function configurarContagem() {
         celulaIdade.textContent = i;
         celulaContagem.textContent = 0;
 
+        // Ao clicar na célula de idade, a contagem vai aumentar
         celulaIdade.addEventListener("click", function() {
             celulaContagem.textContent = parseInt(celulaContagem.textContent) + 1;
         });
@@ -51,6 +22,7 @@ function configurarContagem() {
         linha.appendChild(celulaIdade);
         linha.appendChild(celulaContagem);
 
+        // Adiciona as idades 0-50 na tabela da esquerda
         if (i <= 50) {
             tabelaEsquerda.appendChild(linha);
         } else {
