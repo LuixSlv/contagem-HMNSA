@@ -63,7 +63,7 @@ function imprimirContagem() {
     const dataHoraContagem = document.getElementById("data-hora-contagem").textContent;
 
     const conteudoImpressao = `
-        <h1>Contagem de Idades</h1>
+        <h1>Contagem de Idades </h1>
         <p>${nomeContagem}</p>
         <p>${dataHoraContagem}</p>
         ${tabela}
