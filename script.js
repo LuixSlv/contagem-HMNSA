@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", function() {
     configurarContagem();
+    carregarContagemSalva();
 });
 
 function configurarContagem() {
@@ -14,7 +15,6 @@ function configurarContagem() {
         celulaIdade.textContent = i;
         celulaContagem.textContent = 0;
 
-        // Ao clicar na célula de idade, a contagem vai aumentar
         celulaIdade.addEventListener("click", function() {
             celulaContagem.textContent = parseInt(celulaContagem.textContent) + 1;
         });
@@ -22,12 +22,27 @@ function configurarContagem() {
         linha.appendChild(celulaIdade);
         linha.appendChild(celulaContagem);
 
-        // Adiciona as idades 0-50 na tabela da esquerda
         if (i <= 50) {
             tabelaEsquerda.appendChild(linha);
         } else {
             tabelaDireita.appendChild(linha);
         }
+    }
+}
+
+function carregarContagemSalva() {
+    let contagemSalva = JSON.parse(localStorage.getItem("contagemAberta"));
+    if (contagemSalva) {
+        let tabelaEsquerda = document.getElementById("tabela-esquerda");
+        let tabelaDireita = document.getElementById("tabela-direita");
+
+        Object.keys(contagemSalva).forEach(idade => {
+            let quantidade = contagemSalva[idade];
+            let linha = idade <= 50 ? tabelaEsquerda.querySelector(`tr:nth-child(${parseInt(idade) + 1})`) : tabelaDireita.querySelector(`tr:nth-child(${parseInt(idade) + 1})`);
+            if (linha) {
+                linha.cells[1].textContent = quantidade;
+            }
+        });
     }
 }
 
@@ -58,5 +73,5 @@ function salvarContagem() {
 
     registros.push(registro);
     localStorage.setItem("registros", JSON.stringify(registros));
-    window.location.href = "index.html";  // Redireciona de volta para a página de registros
+    window.location.href = "index.html";
 }
