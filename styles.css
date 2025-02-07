@@ -1,100 +1,18 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
+@media print {
+    body {
+        font-size: 12pt;
+        background-color: white;
+    }
+    h1, p, table {
+        page-break-before: always;
+    }
+    table {
+        width: 100%;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 5px;
+        text-align: center;
+    }
 }
-
-header, footer {
-    background-color: orange;
-    padding: 10px;
-    color: white;
-    font-weight: bold;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 50px;
-    margin: 20px 0;
-}
-
-.spacer {
-    width: 50px;
-}
-
-table {
-    border-collapse: collapse;
-    width: 300px;
-}
-
-th, td {
-    border: 1px solid black;
-    padding: 5px;
-    text-align: center;
-}
-
-th {
-    background-color: blue;
-    color: white;
-}
-
-td {
-    cursor: pointer;
-}
-
-tr:nth-child(even) td:nth-child(2) {
-    background-color: #d3d3d3;
-}
-
-td:first-child {
-    font-weight: bold;
-}
-
-button {
-    margin-top: 20px;
-    padding: 10px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-#lista-registros {
-    list-style-type: none;
-    padding: 0;
-}
-
-#lista-registros li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 10px 0;
-}
-
-#lista-registros span {
-    margin-right: 10px;
-}
-
-button {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: darkred;
-}
-
-span[style="cursor: pointer;"] {
-    font-size: 18px;
-    cursor: pointer;
-}
-
-span[style="cursor: pointer;"]:hover {
-    color: orange;
-}
-
