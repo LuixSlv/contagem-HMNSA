@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function() { 
     const tabelaEsquerda = document.getElementById("tabela-esquerda");
     const tabelaDireita = document.getElementById("tabela-direita");
 
