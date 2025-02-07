@@ -1,72 +1,135 @@
+/* Estilo Geral */
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
     margin: 0;
     padding: 0;
+    background-color: #f5f5f5;
 }
 
-header, footer {
-    background-color: orange;
+header {
+    background-color: #f28c28; /* Laranja */
     padding: 10px;
     color: white;
-    font-weight: bold;
-    width: 100%;
-    box-sizing: border-box;
+    text-align: center;
 }
 
+footer {
+    background-color: #f28c28; /* Laranja */
+    padding: 10px;
+    color: white;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Layout das Tabelas */
 .container {
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 50px;
-    margin: 20px 0;
-}
-
-.spacer {
-    width: 50px;
+    justify-content: space-between;
+    margin: 20px;
 }
 
 table {
+    width: 45%;
     border-collapse: collapse;
-    width: 300px;
+    margin: 0 10px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
 }
 
 th, td {
-    border: 1px solid black;
-    padding: 5px;
+    padding: 10px;
     text-align: center;
 }
 
 th {
-    background-color: blue;
+    background-color: #f28c28; /* Laranja */
     color: white;
 }
 
-td {
-    cursor: pointer;
+/* Tabelas no modo de impressão */
+@media print {
+    table {
+        border: 1px solid #000;
+        width: 45%;
+        float: left;
+        margin-right: 20px;
+    }
+
+    body {
+        background-color: white;
+    }
+
+    header, footer {
+        display: none;
+    }
+
+    h1 {
+        text-align: center;
+        font-size: 24px;
+    }
 }
 
-tr:nth-child(even) td:nth-child(2) {
-    background-color: #d3d3d3;
+/* Caixa de Edição de Nome */
+#nome-contagem-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-td:first-child {
-    font-weight: bold;
-}
-
-button {
-    margin-top: 20px;
-    padding: 10px;
+#input-nome {
+    display: none;
+    padding: 5px;
     font-size: 16px;
-    cursor: pointer;
 }
 
+#nome-contagem-container.edit #input-nome {
+    display: block;
+}
+
+/* Container dos Botões */
 .container-buttons {
     display: flex;
-    justify-content: center;
-    gap: 20px;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
-.container-buttons button {
-    margin-top: 20px;
+/* Estilo dos Botões */
+button {
+    padding: 10px;
+    font-size: 16px;
+    background-color: #f28c28;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e57a1f;
+}
+
+/* Estilo da lista de registros */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+li button {
+    background-color: #28a745;
+}
+
+li button:hover {
+    background-color: #218838;
 }
